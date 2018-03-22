@@ -19,6 +19,6 @@ RUN go build /main.go
 ARG VCS_REF
 
 LABEL org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/petertilsen/swarm-scaler"
+      org.label-schema.vcs-url="https://github.com/petertilsen/docker-swarm-scaler"
 
 ENTRYPOINT ["./main"]
