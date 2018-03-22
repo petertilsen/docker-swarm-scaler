@@ -1,9 +1,14 @@
 # Docker Swarm Scaler as golang package
 
+[![](https://images.microbadger.com/badges/image/petertilsen1/docker-swarm-scaler.svg)](https://microbadger.com/images/petertilsen1/docker-swarm-scaler "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/petertilsen1/docker-swarm-scaler.svg)](https://microbadger.com/images/petertilsen1/docker-swarm-scaler "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/commit/petertilsen1/docker-swarm-scaler.svg)](https://microbadger.com/images/petertilsen1/docker-swarm-scaler "Get your own commit badge on microbadger.com")
+[![Build Status](https://travis-ci.org/petertilsen/docker-swarm-scaler.svg?branch=master)](https://travis-ci.org/petertilsen/docker-swarm-scaler)
+
 ## Features ##
 
-Up and Down scaling of docker swarm services
-AWS ECR access to update distributed swarm images
+* Up and Down scaling of docker swarm services
+* AWS ECR access to update distributed swarm images
 
 ## Prerequisites
 
@@ -51,8 +56,9 @@ receivers:
 Alert json payload from Alertmanger will contain the name of your service
 
 ```json
-"annotations": {"service": "[YOUR DOCKER SWARM SERVICE]", "summary": "test", "description": "test"},
-
+{
+"annotations": {"service": "[YOUR DOCKER SWARM SERVICE]", "summary": "test", "description": "test"}
+}
 ```
 
 Full example of valid Alertmanger Webhook json payload
