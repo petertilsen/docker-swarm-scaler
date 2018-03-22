@@ -134,7 +134,7 @@ func TestScaleUp(t *testing.T) {
 
 	r := s.scaleUp()
 	if r != true {
-		t.Errorf("Expected %q, got %q", true, r)
+		t.Errorf("Expected %t, got %t", true, r)
 	}
 	if s.Scale != 2 {
 		t.Errorf("Expected %q, got %q", 2, s.Scale)
@@ -156,7 +156,7 @@ func TestScaleDown(t *testing.T) {
 
 	r := s.scaleDown()
 	if r != true {
-		t.Errorf("Expected %q, got %q", true, r)
+		t.Errorf("Expected %t, got %t", true, r)
 	}
 	if s.Scale != 1 {
 		t.Errorf("Expected %q, got %q", 1, s.Scale)
