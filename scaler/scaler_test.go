@@ -53,8 +53,6 @@ func TestHandlerBadRequest(t *testing.T) {
 }
 
 func TestHandlerGoodRequest(t *testing.T) {
-
-
 	res := NewResponse(t)
 	s := &service{}
 	origReplicas := getReplicas
@@ -86,8 +84,6 @@ func TestHandlerGoodRequest(t *testing.T) {
 	if res.status == http.StatusBadRequest {
 		t.Errorf("Expected %q, got %q", http.StatusBadRequest, res.status)
 	}
-
-
 	e := `{"Service":[{"Name":"docker-tools_cadvisor","Scale":0}],"Status":"OK"}`
 	if string(res.body) != e {
 		t.Errorf("Expected %q, got %q", e, string(res.body))
