@@ -127,8 +127,7 @@ func (s *service) scaleDown() bool {
 }
 
 func getReplicas(s *service) (int, int) {
-	cmdStrService := fmt.Sprintf("docker service ls --filter name=%s --format '{{.Replicas}}'", s.Name)
-	replicas := command(cmdStrService, false)
+	replicas := s.replicasCmd()
 	r := strings.TrimSuffix(string(replicas[:]), "\n")
 	sl := strings.Split(r, "/")
 
@@ -142,6 +141,11 @@ func (s *service) update() []byte {
 	s.loginCmd()
 	i := s.imageCmd()
 	return s.updateCmd(i)
+}
+
+func (s *service) replicasCmd() []byte {
+	cmdStr := fmt.Sprintf("docker service ls --filter name=%s --format '{{.Replicas}}'", s.Name)
+	return command(cmdStr, false)
 }
 
 func (s *service) updateCmd(i string) []byte {
