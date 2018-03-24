@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+var cu,ta = 1,1
+
 type mockResponse struct {
 	t       *testing.T
 	headers http.Header
@@ -58,7 +60,7 @@ func TestHandlerGoodRequest(t *testing.T) {
 	origReplicas := getReplicas
 	origCommand := executeCmd
 	replicas = mockGetReplicas
-	command = s.mockCommand
+	command = s.mockCommandDebug
 	defer func() { command = origCommand }()
 	defer func() { replicas = origReplicas }()
 
@@ -105,7 +107,7 @@ func TestHandleAlerts(t *testing.T) {
 	origReplicas := getReplicas
 	origCommand := executeCmd
 	replicas = mockGetReplicas
-	command = s.mockCommand
+	command = s.mockCommandDebug
 	defer func() { command = origCommand }()
 	defer func() { replicas = origReplicas }()
 
@@ -124,13 +126,28 @@ func TestScaleUp(t *testing.T) {
 	origReplicas := getReplicas
 	origCommand := executeCmd
 	replicas = mockGetReplicas
-	command = s.mockCommand
+	command = s.mockCommandDebug
 	defer func() { command = origCommand }()
 	defer func() { replicas = origReplicas }()
 
 	r := s.scaleUp()
 	if r != true {
 		t.Errorf("Expected %t, got %t", true, r)
+	}
+	if s.Scale != 2 {
+		t.Errorf("Expected %q, got %q", 2, s.Scale)
+	}
+
+	cu,ta = 50,50
+	rM := s.scaleUp()
+	if rM != true {
+		t.Errorf("Expected %t, got %t", true, rM)
+	}
+
+	cu,ta = 1,2
+	rF := s.scaleUp()
+	if rF != true {
+		t.Errorf("Expected %t, got %t", true, rF)
 	}
 	if s.Scale != 2 {
 		t.Errorf("Expected %q, got %q", 2, s.Scale)
@@ -146,17 +163,61 @@ func TestScaleDown(t *testing.T) {
 	origReplicas := getReplicas
 	origCommand := executeCmd
 	replicas = mockGetReplicas
-	command = s.mockCommand
+	command = s.mockCommandDebug
 	defer func() { command = origCommand }()
 	defer func() { replicas = origReplicas }()
 
-	r := s.scaleDown()
-	if r != true {
-		t.Errorf("Expected %t, got %t", true, r)
+	rM := s.scaleDown()
+	if rM != true {
+		t.Errorf("Expected %t, got %t", true, rM)
 	}
 	if s.Scale != 1 {
 		t.Errorf("Expected %q, got %q", 1, s.Scale)
 	}
+
+	cu,ta = 3,3
+	r := s.scaleDown()
+	if r != true {
+		t.Errorf("Expected %t, got %t", true, r)
+	}
+	if s.Scale != 2 {
+		t.Errorf("Expected %q, got %q", 2, s.Scale)
+	}
+
+	cu,ta = 1,2
+	rC := s.scaleDown()
+	if rC != true {
+		t.Errorf("Expected %t, got %t", true, rC)
+	}
+	if s.Scale != 2 {
+		t.Errorf("Expected %q, got %q", 2, s.Scale)
+	}
+
+}
+
+func TestGetReplicas(t *testing.T) {
+	s := &service{
+		Name:  "test",
+		Scale: 1}
+
+	origCommand := executeCmd
+	command = s.mockCommandDebug
+	defer func() { command = origCommand }()
+
+	e := "docker service ls --filter name=test --format '{{.Replicas}}'"
+
+	rD := s.replicasCmd()
+	if string(rD[:]) != e {
+		t.Errorf("Expected %q, got %q", e, string(rD[:]))
+	}
+
+	command = s.mockCommand
+	cu,to := getReplicas(s)
+	if cu != 1 || to != 1 {
+		t.Errorf("Expected %q %q, got %q q", 1, 1, cu, to)
+	}
+
+
 }
 
 func TestLogin(t *testing.T) {
@@ -165,7 +226,7 @@ func TestLogin(t *testing.T) {
 	os.Setenv("AWS_ACCESS_KEY_ID", "1")
 	os.Setenv("AWS_SECRET_ACCESS_KEY", "1")
 	origCommand := executeCmd
-	command = s.mockCommand
+	command = s.mockCommandDebug
 	defer func() { command = origCommand }()
 
 	e := "export AWS_ACCESS_KEY_ID=1 && export AWS_SECRET_ACCESS_KEY=1 " +
@@ -184,7 +245,7 @@ func TestImage(t *testing.T) {
 	os.Setenv("AWS_ACCESS_KEY_ID", "1")
 	os.Setenv("AWS_SECRET_ACCESS_KEY", "1")
 	origCommand := executeCmd
-	command = s.mockCommand
+	command = s.mockCommandDebug
 	defer func() { command = origCommand }()
 
 	e := "docker service ls --filter name=test --format '{{.Image}}'"
@@ -201,7 +262,7 @@ func TestScale(t *testing.T) {
 		Scale: 1}
 
 	origCommand := executeCmd
-	command = s.mockCommand
+	command = s.mockCommandDebug
 	defer func() { command = origCommand }()
 
 	e := "docker service ls --filter name=test --format '{{.Image}}'"
@@ -217,7 +278,7 @@ func TestUpdate(t *testing.T) {
 		Name: "test"}
 
 	origCommand := executeCmd
-	command = s.mockCommand
+	command = s.mockCommandDebug
 	defer func() { command = origCommand }()
 
 	e := "docker pull image " +
@@ -246,9 +307,13 @@ func TestExecuteCommand(t *testing.T) {
 }
 
 func mockGetReplicas(s *service) (int, int) {
-	return 1, 1
+	return cu, ta
+}
+
+func (s *service) mockCommandDebug(cmd string, dryrun bool) []byte {
+	return []byte(cmd)
 }
 
 func (s *service) mockCommand(cmd string, dryrun bool) []byte {
-	return []byte(cmd)
+	return []byte("1/1")
 }
