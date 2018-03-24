@@ -14,9 +14,7 @@ install:
 script:
 - diff -u <(echo -n) <(gofmt -d -s .)
 - go tool vet .
-- go test -v -covermode=count -coverprofile=coverage.out $HOME/gopath/bin/goveralls
-  -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN -race
-  ./scaler
+- go test -v -covermode=count -coverprofile=coverage.out $HOME/gopath/bin/goveralls -service=travis-ci -repotoken $COVERALLS_TOKEN -race ./scaler
 env:
   global:
     secure: r6FT14MIHmOuMSFVepgifOfhOppHbiVi0CSYU/NkAoXSDqNvFaUxFMgDCyfkKmgheZ/GJdN1BzqV/47Ju8yYsz0f/Ge2mHJVTsHYtjcTJEmyb4eA6HIOJLHIflId1EExiijUWFj9L1MLa4vS3OqABcwGSqvdqLlqiMaAgzUoTUdN0HXE9a0C1RRUTYUlrWvoKDPKdS3BqZ/6QCMVoiKAcUOxN63cWeiCrk8wLeH7dOxpvWYl0MOQhH3E4P21bHsi1BxbtaCsLmnGZSxsgSBs0zyPiJPotSoQWmbYKMHfRDrFaHXba3Pm728kEKhSbVNL41tacAFzW/ayWhv1dA55Y9zq+jKRmlN0VIPhpt7YEtk41hgeozuzyzBBDIedolZJoGC3iXcBtsVCFZzauStG/9uImw4Jp6VSBFFibrFfvxcVzwIaVHCzNSvtx4f/ApbtQWzw83ua4kq2VlkiXgDYE1li9qP3vlHLhzs+aersvpCnYaoeo3d3ZS/vLYI+Zfs/Z3kUSnRpoTbIQtcFm7W5HUTpITdjBTMl9rzhj/QbscoEy0EakiR9TQ2h8PSAvr0JDdj5mjPoeWOEIvqutcijU6FYdGCIdEwPq0kwlnhuITWRZF9vWVawREkvl1cjL98nABPeISQCzO/4vQCHAj5XOgP5xfBlxWrzVs1zL/O5eVw=
