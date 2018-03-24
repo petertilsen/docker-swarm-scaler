@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-var cu,ta = 1,1
+var cu, ta = 1, 1
 
 type mockResponse struct {
 	t       *testing.T
@@ -138,13 +138,13 @@ func TestScaleUp(t *testing.T) {
 		t.Errorf("Expected %q, got %q", 2, s.Scale)
 	}
 
-	cu,ta = 50,50
+	cu, ta = 50, 50
 	rM := s.scaleUp()
 	if rM != true {
 		t.Errorf("Expected %t, got %t", true, rM)
 	}
 
-	cu,ta = 1,2
+	cu, ta = 1, 2
 	rF := s.scaleUp()
 	if rF != true {
 		t.Errorf("Expected %t, got %t", true, rF)
@@ -175,7 +175,7 @@ func TestScaleDown(t *testing.T) {
 		t.Errorf("Expected %q, got %q", 1, s.Scale)
 	}
 
-	cu,ta = 3,3
+	cu, ta = 3, 3
 	r := s.scaleDown()
 	if r != true {
 		t.Errorf("Expected %t, got %t", true, r)
@@ -184,7 +184,7 @@ func TestScaleDown(t *testing.T) {
 		t.Errorf("Expected %q, got %q", 2, s.Scale)
 	}
 
-	cu,ta = 1,2
+	cu, ta = 1, 2
 	rC := s.scaleDown()
 	if rC != true {
 		t.Errorf("Expected %t, got %t", true, rC)
@@ -212,11 +212,10 @@ func TestGetReplicas(t *testing.T) {
 	}
 
 	command = s.mockCommand
-	cu,to := getReplicas(s)
-	if cu != 1 || to != 1 {
-		t.Errorf("Expected %q %q, got %q q", 1, 1, cu, to)
+	cu, ta := getReplicas(s)
+	if cu != 1 || ta != 1 {
+		t.Errorf("Expected %q %q, got %q %q", 1, 1, cu, ta)
 	}
-
 
 }
 
