@@ -4,6 +4,7 @@
 [![](https://images.microbadger.com/badges/version/petertilsen1/docker-swarm-scaler.svg)](https://microbadger.com/images/petertilsen1/docker-swarm-scaler "Get your own version badge on microbadger.com")
 [![](https://images.microbadger.com/badges/commit/petertilsen1/docker-swarm-scaler.svg)](https://microbadger.com/images/petertilsen1/docker-swarm-scaler "Get your own commit badge on microbadger.com")
 [![Build Status](https://travis-ci.org/petertilsen/docker-swarm-scaler.svg?branch=master)](https://travis-ci.org/petertilsen/docker-swarm-scaler)
+[![Coverage Status](https://coveralls.io/repos/github/petertilsen/docker-swarm-scaler/badge.svg?branch=master)](https://coveralls.io/github/petertilsen/docker-swarm-scaler?branch=master)
 
 ## Features ##
 
