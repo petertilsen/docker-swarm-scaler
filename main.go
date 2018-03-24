@@ -1,7 +1,7 @@
 package main
 
 import (
-	s "./scaler"
+	s "github.com/petertilsen/docker-swarm-scaler"
 	"runtime"
 )
 
