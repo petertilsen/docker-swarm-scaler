@@ -89,7 +89,7 @@ version: '3.4'
 services:
   scaler_dev:
     image: petertilsen1/docker-tools_scaler:latest
-    envorinment:
+    environment:
         - AWS_ACCESS_KEY_ID=[YOUR ID]
         - AWS_SECRET_ACCESS_KEY=[YOUR ACCESS KEY]
     ports:
